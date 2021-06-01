@@ -6,9 +6,7 @@ using namespace std;
 int main()
 {
 
-    XML_Data xmlData;
-    XML_Helper::getInput(&xmlData);
-    XML_Helper::saveDate("output_sample", xmlData);
-//    dfs(data->getRoot(), 0);
+    //XML_Data xmlData = XML_Helper::loadData("Planes");
+    //dfs(xmlData->getRoot(), 0);
     return 0;
 }

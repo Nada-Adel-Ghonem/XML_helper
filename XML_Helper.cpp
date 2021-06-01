@@ -1,4 +1,4 @@
-#include "XML_Helper.h"
+     #include "XML_Helper.h"
 
 using namespace std;
 
@@ -69,3 +69,63 @@ void XML_Helper::printNode(const XML_Node *xmlNode, int indentation, ofstream &f
     }
     fileName << string(indentation, '\t') << "</" << xmlNode->getTagName() << ">\n";
 }
+ XML_Data XML_Helper::loadData(string filePath)
+ {
+     string inputText;
+     ifstream inputFile(filePath + ".xml");
+     XML_Data data;
+     stack<XML_Node *> parents;
+     while (getline(inputFile, inputText))
+     {
+         string lastInput;
+         for (char i : inputText)
+         {
+             if (i == '<' && !lastInput.empty())
+             {
+                 parents.top()->setText(lastInput);
+                 lastInput.clear();
+                 parents.top()->setLeaf(true);
+             }
+             if (i == ' ' && (lastInput.empty() || lastInput.back() == ' '))
+             {
+                 continue;
+             }
+             lastInput.push_back(i);
+             if (i == '>' && !lastInput.empty() && lastInput[0] == '<')
+             {
+                 if (lastInput[1] != '/')
+                 {
+                     if (lastInput == "<root>")
+                     {
+                         parents.push(data.getRoot());
+                     }
+                     else
+                     {
+                         parents.top()->addChild(new XML_Node(lastInput));
+                         parents.push(parents.top()->getChildren().back());
+                     }
+                 }
+                 else
+                 {
+                     lastInput.erase(lastInput.begin() + 1);
+                     if (parents.empty() || lastInput != parents.top()->getTagName())
+                     {
+                         cout << "There is no open tag with " << lastInput << endl;
+                         exit(0);
+                     }
+                     else
+                     {
+                         parents.pop();
+                     }
+                 }
+                 lastInput.clear();
+             }
+         }
+     }
+     if (!parents.empty())
+     {
+         cout << "This xml file is not complete" << endl;
+         exit(0);
+     }
+     return data;
+ }
