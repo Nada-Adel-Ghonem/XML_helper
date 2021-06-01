@@ -8,8 +8,18 @@ using namespace std;
 
 class XML_Data
 {
+
+private:
     XML_Node *root;
-    map<string, vector<XML_Node*>> get_Name;
+    map<string, vector<XML_Node *>> get_Name;
+
+public:
+    XML_Data();
+
+    XML_Node *getRoot() const;
+
+    const map<string, vector<XML_Node *>> &getGetName() const;
+
 };
 
 

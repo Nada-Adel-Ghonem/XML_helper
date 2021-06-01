@@ -8,6 +8,12 @@ using namespace std;
 
 class XML_Node
 {
+
+private:
+    string tagName, text;
+    bool leaf;
+    vector<XML_Node *> children;
+
 public:
     XML_Node(const string &tagName);
 
@@ -19,10 +25,6 @@ public:
 
     const vector<XML_Node *> &getChildren() const;
 
-private:
-    string tagName, text;
-    bool leaf;
-    vector<XML_Node *> children;
 };
 
 
