@@ -1,6 +1,4 @@
 #include <iostream>
-#include "XML_Node.h"
-#include "XML_Data.h"
 #include "XML_Helper.h"
 
 using namespace std;
@@ -26,8 +24,9 @@ using namespace std;
 
 int main()
 {
-    XML_Data *data = new XML_Data();
-    XML_Helper::get_Input(data);
-    // dfs(data->getRoot(), 0);
+    XML_Data xmlData;
+    XML_Helper::get_Input(&xmlData);
+    XML_Helper::saveDate("output_sample", xmlData);
+//    dfs(data->getRoot(), 0);
     return 0;
 }

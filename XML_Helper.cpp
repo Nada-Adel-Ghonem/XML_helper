@@ -37,3 +37,22 @@ void XML_Helper::get_Input(XML_Data *data)
         }
     }
 }
+
+void XML_Helper::saveDate(string filePath, XML_Data xmlData) {
+    ofstream outputFile;
+    outputFile.open(filePath + ".xml");
+    printNode(xmlData.getRoot(), 0, outputFile);
+    outputFile.close();
+}
+
+void XML_Helper::printNode(const XML_Node *xmlNode, int indentation, ofstream &fileName) {
+    fileName << string(indentation, '\t') << "<" << xmlNode->getTagName() << ">\n";
+    if (xmlNode->isLeaf()) {
+        fileName << string(indentation + 1, '\t') << xmlNode->getText() << "\n";
+    }else{
+        for(auto child : xmlNode->getChildren()){
+            printNode(child, indentation + 1, fileName);
+        }
+    }
+    fileName << string(indentation, '\t') << "</" << xmlNode->getTagName() << ">\n";
+}
