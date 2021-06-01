@@ -25,6 +25,12 @@ public:
 
     const vector<XML_Node *> &getChildren() const;
 
+    void setLeaf(bool leaf);
+
+    void setText(const string &text);
+
+    void setChildren(XML_Node *child);
+
 };
 
 

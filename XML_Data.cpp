@@ -1,7 +1,4 @@
 #include "XML_Data.h"
-#include "XML_Node.h"
-#include <iostream>
-#include <stack>
 
 using namespace std;
 

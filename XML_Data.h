@@ -2,6 +2,8 @@
 #define XML_HELPER_XML_DATA_H
 
 #include "XML_Node.h"
+#include <iostream>
+#include <stack>
 #include <map>
 
 using namespace std;
