@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -13,6 +14,7 @@ private:
     string tagName, text;
     bool leaf;
     vector<XML_Node *> children;
+    map<string, string> attributes;
 
 public:
     XML_Node(const string &tagName);
@@ -29,7 +31,11 @@ public:
 
     void setText(const string &text);
 
-    void setChildren(XML_Node *child);
+    void addChild(XML_Node *child);
+
+    const map<string, string> &getAttributes() const;
+
+    void addAttribute(string key, string value);
 
 };
 

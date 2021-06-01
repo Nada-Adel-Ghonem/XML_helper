@@ -3,14 +3,12 @@
 
 #include <fstream>
 #include "XML_Data.h"
-#include <iostream>
-#include <stack>
 
 class XML_Helper
 {
 
 public:
-    static void get_Input(XML_Data *data);
+    static void getInput(XML_Data *data);
     static void saveDate(string filePath, XML_Data xmlData);
 
 private:
