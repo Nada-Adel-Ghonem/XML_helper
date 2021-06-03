@@ -8,11 +8,14 @@ class XML_Helper
 {
 
 public:
-    static void getInput(XML_Data *data);
+    static void getInput(XML_Data data);
+
     static void saveDate(string filePath, XML_Data xmlData);
-    static XML_Data loadData( string filepath);
+
+    static XML_Data loadData(string filepath);
+
 private:
-    static void printNode(const XML_Node* xmlNode, int indentation, ofstream& fileName);
+    static void printNode(const XML_Node *xmlNode, int indentation, ofstream &fileName);
 
 };
 

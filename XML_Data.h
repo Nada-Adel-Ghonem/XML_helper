@@ -19,9 +19,9 @@ public:
 
     XML_Node *getRoot() const;
 
-    const vector<XML_Node *> &getNodeByName(const string&);
+    const vector<XML_Node *> &getNodeByName(const string &);
 
-    void addNode(const string&, XML_Node *);
+    void addNode(const string &, XML_Node *);
 
 };
 
