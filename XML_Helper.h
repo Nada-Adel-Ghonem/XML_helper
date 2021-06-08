@@ -8,7 +8,7 @@ class XML_Helper
 {
 
 public:
-    static void getInput(XML_Data data);
+    static XML_Data getInput();
 
     static void saveDate(string filePath, XML_Data xmlData);
 

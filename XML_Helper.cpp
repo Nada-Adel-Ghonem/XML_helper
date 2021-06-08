@@ -2,8 +2,9 @@
 
 using namespace std;
 
-void XML_Helper::getInput(XML_Data data)
+XML_Data XML_Helper::getInput()
 {
+    XML_Data data;
     stack<XML_Node *> parents;
     parents.push(data.getRoot());
     while (!parents.empty())
@@ -52,6 +53,7 @@ void XML_Helper::getInput(XML_Data data)
             parents.pop();
         }
     }
+    return data;
 }
 
 void XML_Helper::saveDate(string filePath, XML_Data xmlData)
