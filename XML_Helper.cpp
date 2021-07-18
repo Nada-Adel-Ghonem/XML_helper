@@ -155,6 +155,7 @@ XML_Data XML_Helper::loadData(string filePath)
                         parents.top()->addChild(new XML_Node(lastInput));
                         parents.push(parents.top()->getChildren().back());
                     }
+                    data.addNode(parents.top()->getTagName(), parents.top());
                 }
                 else
                 {
