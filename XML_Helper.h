@@ -17,6 +17,9 @@ public:
 private:
     static void printNode(const XML_Node *xmlNode, int indentation, ofstream &fileName);
 
+    static int getPositiveInteger();
+
+    static bool getYesOrNoResponse();
 };
 
 

@@ -2,55 +2,87 @@
 
 using namespace std;
 
+int XML_Helper::getPositiveInteger()
+{
+    int number;
+    cin >> number;
+    while(number <= 0)
+    {
+        cout << "Please enter a positive integer" << endl;
+        cin >> number;
+    }
+    return number;
+}
+
+bool XML_Helper::getYesOrNoResponse()
+{
+    string userResponse;
+    while (userResponse != "Yes" && userResponse != "No")
+    {
+        cout << "Please Enter \'Yes\' or \'No\' without quotations\n";
+        cin >> userResponse;
+    }
+    return userResponse == "Yes";
+}
+
 XML_Data XML_Helper::getInput()
 {
     XML_Data data;
-    stack<XML_Node *> parents;
-    parents.push(data.getRoot());
-    while (!parents.empty())
+    stack<XML_Node *> nodes;
+    nodes.push(data.getRoot());
+    while (!nodes.empty())
     {
-        cout << "Do you want to add child for node " << parents.top()->getTagName() << endl;
-        bool new_child;
-        cin >> new_child;
-        if (new_child)
+        auto currentNode = nodes.top();
+        nodes.pop();
+        data.addNode(currentNode->getTagName(), currentNode);
+        cout << "Please enter the data of the " << currentNode->getTagName() << " node" << endl;
+
+        cout << "Does the node " << currentNode->getTagName() << " has attributes?" << endl;
+        bool hasAttributes = getYesOrNoResponse();
+
+        if (hasAttributes)
         {
-            cout << "Enter tag name: " << endl;
-            string tag_name;
-            cin >> tag_name;
-            parents.top()->addChild(new XML_Node(tag_name));
-            parents.push(parents.top()->getChildren().back());
-            data.addNode(tag_name, parents.top());
-            cout << "How many attributes it has?" << endl;
-            int attrs;
-            cin >> attrs;
-            for (int i = 0; i < attrs; ++i)
+            cout << "How many attributes does the " << currentNode->getTagName() << " node has?" << endl;
+            int attrsCount = getPositiveInteger();
+            for (int i = 1; i <= attrsCount; ++i)
             {
-                string name;
-                cout << "Enter " << i + 1 << "th attribute name" << endl;
-                cin >> name;
-                string text;
-                cout << "Enter " << i + 1 << "th attribute value" << endl;
+                string attrName;
+                cout << "Enter the name of attribute #" << i << endl;
+                cin >> attrName;
+                string attrText;
+                cout << "Enter the value of attribute #" << i << " then press Enter" << endl;
                 cin.ignore();
-                getline(cin, text);
-                parents.top()->addAttribute(name, text);
-            }
-            cout << "Is it a leaf?" << endl;
-            bool is_leaf;
-            cin >> is_leaf;
-            if (is_leaf)
-            {
-                cout << "Enter text: " << endl;
-                string text;
-                cin.ignore();
-                getline(cin, text);
-                parents.top()->setLeaf(is_leaf);
-                parents.top()->setText(text);
-                parents.pop();
+                getline(cin, attrText);
+                currentNode->addAttribute(attrName, attrText);
             }
         }
-        else
+
+        cout << "Is the " << currentNode->getTagName() << " a leaf node?" << endl;
+        bool isLeaf = getYesOrNoResponse();
+
+        if (isLeaf)
         {
-            parents.pop();
+            cout << "Enter its text then press Enter" << endl;
+            string nodeText;
+            cin.ignore();
+            getline(cin, nodeText);
+            currentNode->setLeaf(true);
+            currentNode->setText(nodeText);
+        } else
+        {
+            cout << "How many children does the " << currentNode->getTagName() << " node has?" << endl;
+            int childrenCount = getPositiveInteger();
+            for (int i = 1; i <= childrenCount; ++i)
+            {
+                cout << "Enter the tag name for the child number " << i << endl;
+                string tagName;
+                cin >> tagName;
+                currentNode->addChild(new XML_Node(tagName));
+            }
+            for (int i = childrenCount - 1; i >= 0; --i)
+            {
+                nodes.push(currentNode->getChildren()[i]);
+            }
         }
     }
     return data;
